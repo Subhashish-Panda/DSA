@@ -1,0 +1,19 @@
+
+
+
+int minDepth(Node *node) 
+{
+    if(node==NULL)
+    return 0;
+    else if(node->left==NULL)
+    return 1+minDepth(node->right);
+    else if(node->right==NULL)
+    return 1+minDepth(node->left);
+    else
+    {
+        int left_h=minDepth(node->left);
+        int right_h=minDepth(node->right);
+        int min=left_h<right_h?left_h:right_h;
+        return min+1;
+    }
+}
