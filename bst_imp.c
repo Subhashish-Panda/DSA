@@ -25,7 +25,6 @@ return temp;
 //Function to insert a Node to BST.
 struct Node* Insert(struct Node* root,int data)
 {
-    
 //If tree is empty.
 if(root==NULL)
 {root=Create(data);
