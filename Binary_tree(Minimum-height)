@@ -1,5 +1,7 @@
+//According to question the defination of minimum-HEIGHT of tree is, no.of nodes in the shortest path from the root node to a leaf node of the tree.
 
-
+//The binary tree would be constructed for you anyhow.
+//You simply need to complete the function(minHeight).
 
 int minDepth(Node *node) 
 {
