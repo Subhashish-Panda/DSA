@@ -1,3 +1,5 @@
+//I have taken the defination of HEIGHT of tree as, no.of edges in the longest path from the root node to a leaf node of the tree.
+
 //The binary tree would be constructed for you anyhow.
 //You simply need to complete the function(getHeight).
 
