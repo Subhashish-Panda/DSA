@@ -1,0 +1,19 @@
+//The binary tree would be constructed for you anyhow.
+//You simply need to complete the function(getHeight).
+
+
+int getHeight(struct node* root) 
+{
+    //Empty tree.
+    if(root==NULL)
+    return -1;
+    
+    //Calculating height of left subtree.
+    int left_h=getHeight(root->left);
+    
+    //Calculating height of right subtree.
+    int right_h=getHeight(root->right);
+    
+    int max=left_h>right_h?left_h:right_h;
+    return max+1;
+}
