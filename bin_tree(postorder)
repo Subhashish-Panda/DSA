@@ -2,7 +2,7 @@
 
 //The binary tree would be given to you in the question.
 
-//Recursive implementation of postorder traversal.
+// Recursive implementation of postorder traversal.
 
 void postOrder( struct node *root) 
 {
