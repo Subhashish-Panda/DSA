@@ -1,0 +1,15 @@
+//Inorder traversal is a type of Depth first traversal technique,in which the left subtree of a binary tree is visited first and then it's root node is visited and at last it's right subtree is visited.
+
+//The binary tree would be given to you in the question.
+
+//Recursive implementation of Inorder traversal.
+
+void inOrder( struct node *root) 
+{
+    if(root==NULL)
+    return;
+    
+    inOrder(root->left);
+    printf("%d ",root->data);
+    inOrder(root->right);
+}
