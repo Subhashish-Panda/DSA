@@ -1,0 +1,16 @@
+//Postorder traversal is a type of Depth first traversal technique,in which at first the left subtree of binary tree is visited and then it's right subtree is visited and at last its root node is visited. 
+
+//The binary tree would be given to you in the question.
+
+//Recursive implementation of postorder traversal.
+
+void postOrder( struct node *root) 
+{
+    //Empty tree.
+    if(root==NULL)
+    return;
+    
+    postOrder(root->left);
+    postOrder(root->right);
+    printf("%d ",root->data);
+}
