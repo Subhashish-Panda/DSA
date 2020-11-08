@@ -1,0 +1,18 @@
+//Preorder traversal is a type of Depth first traversal technique,in which the root node of binary tree is visited first and then it's left subtree is visted and at last it's right subtree is visted.
+
+//The binary tree would be given to you in the question.
+
+//Recursive implementation of preorder traversal.
+
+void preOrder( struct node *root) 
+{
+    //Empty tree.
+    if(root==NULL)
+    return;
+    
+    //Use recursion.
+    printf("%d ",root->data);
+    preOrder(root->left);
+    preOrder(root->right);
+
+}
