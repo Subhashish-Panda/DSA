@@ -1,4 +1,4 @@
-//Preorder traversal is a type of Depth first traversal technique,in which the root node of binary tree is visited first and then it's left subtree is visted and at last it's right subtree is visted.
+//Preorder traversal is a type of Depth first traversal technique,in which the root node of binary tree is visited first and then it's left subtree is visited and at last it's right subtree is visited.
 
 //The binary tree would be given to you in the question.
 
