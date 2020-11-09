@@ -1,0 +1,30 @@
+//Level order traversal, also known as Breadth first traversal is a traversal technique adopted in Binary tree to visit all nodes of it level-by-level.It starts from the top level
+of the tree and then progresses towards its last level.According to this traversal,you cannot move to next level unless you visit all the nodes of the previous level.
+
+//The binary tree would be given to you in the question.
+
+public static void levelOrder(Node root) 
+{
+    //Creating a queue to store the nodes.
+    Queue<Node> trv=new LinkedList<>();
+    
+    //Base case.
+    trv.offer(root);
+    
+    //Algorithm.
+    while(!trv.isEmpty())
+    {
+    Node temp=trv.peek();
+    //Visiting the node at front of queue.
+    System.out.print(temp.data+" ");
+    //Pushing children of visited node into the queue.
+    if(temp.left!=null)
+    trv.offer(temp.left);
+    if(temp.right!=null)
+    trv.offer(temp.right);
+    //Popping out the visited node from the queue.
+    trv.poll();
+    } 
+      
+ }
+
