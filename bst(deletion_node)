@@ -1,0 +1,75 @@
+//Deletion of a node in BST is very good question,since you have to conserve the BST property after deletion also.
+//Tree was already created in this program,we have to implement the logic only.
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+//For finding the minimum element in a BST.
+struct TreeNode* find_min(struct TreeNode* root)
+{
+    if(root->left==NULL)
+    return root;
+    
+    return find_min(root->left);
+}
+
+
+
+struct TreeNode* deleteNode(struct TreeNode* root, int key)
+{
+                   //To search the node,we implement the concept of binary search in BST.
+    
+    if(root==NULL)
+    return root;
+    
+    else if(root->val<key)
+    root->right=deleteNode(root->right,key);
+    
+    else if(root->val>key)
+    root->left=deleteNode(root->left,key);
+    
+    else//We found the node finally.
+    {
+    //Case1-if the target node has no child at all.
+    if(root->right==NULL&&root->left==NULL)
+    {
+    free(root);
+    root=NULL;
+    }
+    
+    //Case2-if the target node has only left child.
+    else if(root->right==NULL&&root->left!=NULL)
+    {
+    struct TreeNode* temp=root;
+    root=root->left;
+    free(temp);
+    }
+    
+    //Case3-if the target node has only right child.
+    else if(root->right!=NULL&&root->left==NULL)
+    {
+    struct TreeNode* temp=root;
+    root=root->right;
+    free(temp);
+    }
+    
+    //Case4-if the target node has two childs.
+    else
+    {
+    struct TreeNode* temp=find_min(root->right);
+    //Setting the root node value as min element of right subtree.
+    root->val=temp->val;
+    //Deleting the duplicate node in right subtree.
+    root->right=deleteNode(root->right,temp->val);
+    }
+    
+    }
+    return root;
+        
+}
