@@ -1,0 +1,45 @@
+//This question is also a popular FAANG interview question.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) 
+    {
+        //Iterative implementation of inorder traversal.
+        
+        Stack<TreeNode> stk=new Stack<TreeNode>();
+        ArrayList<Integer> res=new ArrayList<Integer>();
+        
+        while(true)
+        {
+            if(root!=null)
+            {
+            stk.push(root);
+            root=root.left;
+            }
+            else
+            {
+            if(stk.empty()) break;
+            TreeNode temp=stk.peek();
+            res.add(temp.val);
+            root=temp.right;
+            stk.pop();
+            }
+        }
+        return res;
+        
+    }
+}
