@@ -1,0 +1,62 @@
+//Zigzag traversal of binary tree using two stacks.
+
+
+/*class Node
+{
+    int data;
+    Node left,right;
+    Node(int d)
+    {
+        data=d;
+        left=right=null;
+    }
+}*/
+
+
+class GFG
+{
+	ArrayList<Integer> zigZagTraversal(Node root)
+	{
+	    //To store the node values.
+        ArrayList<Integer> al=new ArrayList<Integer>();
+        
+        //corner case.
+        if(root==null)
+        return al;
+        
+        //Using two stacks.
+        Stack<Node> stk1=new Stack<Node>();
+        Stack<Node> stk2=new Stack<Node>();
+        
+        
+        //Algo...
+        stk1.push(root);
+        while(!stk1.empty()||!stk2.empty())
+        {
+        //Popping elements from stk1 and pushing it's children to stk2(left-right manner).
+        while(!stk1.empty())
+        {
+        Node temp1=stk1.peek();
+        if(temp1.left!=null)
+        stk2.push(temp1.left);
+        if(temp1.right!=null)
+        stk2.push(temp1.right);
+        al.add(temp1.data);
+        stk1.pop();
+        }
+    
+        //Popping elements from stk2 and pushing it's children to stk1(right-left manner).
+        while(!stk2.empty())
+        {
+        Node temp2=stk2.peek();
+        if(temp2.right!=null)
+        stk1.push(temp2.right);
+        if(temp2.left!=null)
+        stk1.push(temp2.left);
+        al.add(temp2.data);
+        stk2.pop();
+        }
+        }
+        return al;
+	}
+}
