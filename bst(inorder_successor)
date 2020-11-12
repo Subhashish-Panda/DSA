@@ -1,0 +1,65 @@
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+	public TreeNode getSuccessor(TreeNode a, int b) 
+	{
+	    TreeNode successor=null;
+	    //Search the element in BST.
+	    TreeNode current=search(a,b);
+	    
+	    //if the target node has a right subtree.
+	    //Inorder successor would be the minimum element in right subtree.
+	    if(current.right!=null)
+	    return find_min(current.right);
+	    
+	    //If the target node has no right subtree.
+	    //Inorder succesor would be its nearest ancestor for which,
+	    //this node must lie in it's left subtree.
+	    else
+	    {
+	        TreeNode ancestor=a;
+	        
+	        while(ancestor!=current)
+	        {
+	            if(current.val<ancestor.val)
+	            {
+	                successor=ancestor;
+	                ancestor=ancestor.left;
+	            }
+	            else
+	            ancestor=ancestor.right;
+	        }
+	    }
+	    return successor;
+	}
+	
+	//Function to search the element in BST.
+	public TreeNode search(TreeNode root,int ele)
+	{
+	    if(root==null)
+	    return root;
+	    else if(ele>root.val)
+	    return search(root.right,ele);
+	    else if(ele<root.val)
+	    return search(root.left,ele);
+	    else
+	    return root;
+	}
+	
+	//Function to find minimum element in BST.
+	public TreeNode find_min(TreeNode root)
+	{
+	    if(root.left==null)
+	    return root;
+	    
+	    return find_min(root.left);
+	}
+	
+}
