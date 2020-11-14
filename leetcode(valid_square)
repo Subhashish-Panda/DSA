@@ -1,0 +1,57 @@
+class Solution {
+    public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) 
+    {
+        //Algorithm.
+        
+        //Pick any point from given four points.
+        //Determine the distance of this point from other points.
+        //Now if two of the distances are equal(i.e d),
+        //and third distance is equal to root(2)*d.
+        //Then check if the point that gave unequal distance with picked point,
+        //is at equal distance(d) from other two points(excluding the picked point).
+        //Now check if other diagonal of square is of same length,
+        //as that of first diagonal.
+        //If any of the above conditions doesn't satisfy,
+        //or any of the distances is 0 then return false.
+        
+        double dis1=calc_dis(p1,p2);
+        double dis2=calc_dis(p1,p3);
+        double dis3=calc_dis(p1,p4);
+        
+        if(dis1==0||dis2==0||dis3==0)
+        return false;
+        
+        else if(dis1==dis3&&dis2==2*dis1)
+        {
+            if(calc_dis(p3,p4)==dis1&&calc_dis(p3,p2)==dis1&&calc_dis(p2,p4)==2*dis1)
+            return true;
+            else
+            return false;
+        }
+        else if(dis1==dis2&&dis3==2*dis1)
+        {
+            if(calc_dis(p2,p4)==dis1&&calc_dis(p3,p4)==dis1&&calc_dis(p2,p3)==2*dis1)
+            return true;
+            else
+            return false;
+        }
+        else if(dis2==dis3&&dis1==2*dis2)
+        {
+            if(calc_dis(p2,p3)==dis2&&calc_dis(p2,p4)==dis2&&calc_dis(p3,p4)==2*dis2)
+            return true;
+            else
+            return false;
+        }
+        else
+        return false;
+        
+    }
+    public double calc_dis(int[] ptr1,int[] ptr2)
+    {
+        int x1=ptr1[0];
+        int x2=ptr2[0];
+        int y1=ptr1[1];
+        int y2=ptr2[1];
+        return (x2-x1)*(x2-x1)+(y2-y1)*(y2-y1);
+    }
+}
