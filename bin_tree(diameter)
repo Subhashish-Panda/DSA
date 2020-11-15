@@ -1,0 +1,25 @@
+//Question link-> https://practice.geeksforgeeks.org/problems/diameter-of-binary-tree/1
+
+//Solution...
+class Tree 
+{
+    //For finding the diameter of tree.
+    int diameter(Node root) 
+    {
+    //Empty tree.
+    if(root==null)
+    return 0;
+    
+    return Math.max(diameter(root.left),Math.max(diameter(root.right),find_h(root.left)+find_h(root.right)+1));
+    }
+    
+    //For finding height of binary tree.
+    int find_h(Node root)
+    {
+        //Empty tree.
+        if(root==null)
+        return 0;
+        
+        return Math.max(find_h(root.left),find_h(root.right))+1;
+    }
+}
