@@ -1,0 +1,67 @@
+/*Question...
+
+You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
+
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+Initially, all next pointers are set to NULL.
+
+Follow up:
+->You may only use constant extra space.
+->Recursive approach is fine, you may assume implicit stack space does not count as extra space for this problem.
+
+Link-https://leetcode.com/explore/challenge/card/november-leetcoding-challenge/565/week-2-november-8th-november-14th/3529/
+*/
+
+/**
+ * Definition for a Node.
+ * struct Node {
+ *     int val;
+ *     struct Node *left;
+ *     struct Node *right;
+ *     struct Node *next;
+ * };
+ */
+
+struct Node* connect(struct Node* root) 
+{
+    //Calling the populate function.
+    populate(root,NULL);
+    return root;
+}
+
+void populate(struct Node* root,struct Node* prev)
+{
+    //Base cases(empty tree).
+    if(root==NULL)
+    return;
+    
+    if(prev!=NULL)
+    {
+    //Setting next pointer for left child of prev.
+    if(prev->left==root)
+    root->next=prev->right;
+    }
+    
+    //Populating the left subtree.
+    populate(root->left,root);
+    
+    if(prev!=NULL)
+    {
+    //Setting next pointer for right child of prev.
+    if(prev->next!=NULL&&prev->right==root)
+    {
+        root->next=(prev->next)->left;
+    }
+    }
+    
+    //Populating the right subtree.
+    populate(root->right,root);
+    
+    return;
+}
