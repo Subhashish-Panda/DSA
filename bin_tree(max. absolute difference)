@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    //Using the concept of maximum minus minimum.
+    public int maxAncestorDiff(TreeNode root) 
+    {
+        return find_diff(root,root.val,root.val);
+    }
+    
+    public int find_diff(TreeNode root,int currmax,int currmin)
+    {
+        //If leaf node is also visited.
+        if(root==null)
+        return Math.abs(currmax-currmin);
+        
+        //Updating the current max and min value.
+        currmax=Math.max(currmax,root.val);
+        currmin=Math.min(currmin,root.val);
+        
+        //Determining the path starting from root and ending in leaf node of left subtree giving the maximum difference.
+        int left=find_diff(root.left,currmax,currmin);
+        //Determining the path starting from root and ending in leaf node of right subtree giving the maximum difference.
+        int right=find_diff(root.right,currmax,currmin);
+        return Math.max(left,right);
+    }
+}
