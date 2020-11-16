@@ -1,3 +1,5 @@
+
+//Approach1-Optimal method(maximum minus minimum in all paths and then determine the maximum of all such differences). 
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -36,5 +38,31 @@ class Solution
         //Determining the path starting from root and ending in leaf node of right subtree giving the maximum difference.
         int right=find_diff(root.right,currmax,currmin);
         return Math.max(left,right);
+    }
+}
+
+//Approach2-Brute force,but nice recursion(comparing every ancestor-successor pair in the tree).
+class Solution {
+    public int maxAncestorDiff(TreeNode root) 
+    {
+        if(root==null)
+        return 0;
+        int max=0;
+        max=Math.max(find_diff(root,root.left,0),find_diff(root,root.right,0));
+        max=Math.max(max,Math.max(maxAncestorDiff(root.left),maxAncestorDiff(root.right)));
+        return max;
+    }
+    
+    
+    //Function to calculate the maximum difference that can be generated between an ancestor and it's successor.
+    public int find_diff(TreeNode start,TreeNode end,int max)
+    {
+        if(end==null)
+        return 0;
+        
+        max=Math.max(find_diff(start,end.left,max),find_diff(start,end.right,max));
+        if(Math.abs(start.val-end.val)>max)
+        max=Math.abs(start.val-end.val);
+        return max;
     }
 }
