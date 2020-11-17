@@ -1,0 +1,60 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    //To store the result(i.e all paths).
+    ArrayList<String> res=new ArrayList<String>();
+    
+    public List<String> binaryTreePaths(TreeNode root) 
+    {
+     List<String> al=new ArrayList<String>();
+     
+     //If tree is empty.
+     if(root==null)
+     return al;
+    
+     //If tree is not empty.
+     path_store(root,"");
+     return res;
+    }
+    
+    //Recursion comes to rescue.
+    public void path_store(TreeNode root,String str)
+    {
+        if(root.left==null&&root.right==null)
+        {res.add(str+""+root.val);return;}
+        
+        else if(root.left==null&&root.right!=null)
+        {str+=root.val+"->";
+         path_store(root.right,str);
+        }
+        
+        else if(root.left!=null&&root.right==null)
+        {str+=root.val+"->";
+         path_store(root.left,str);
+        }
+        
+        else
+        {
+            String temp1=str,temp2=str;
+            temp1+=root.val+"->";
+            path_store(root.left,temp1);
+            temp2+=root.val+"->";
+            path_store(root.right,temp2);
+        }
+    }
+    
+}
