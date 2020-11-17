@@ -1,0 +1,27 @@
+bool find(Node* root,int x,int sum)
+{
+    if(root->left==NULL&&root->right==NULL)
+    {
+        x+=root->data;
+        if(x==sum)
+        return true;
+        return false;
+    }
+    else if(root->left!=NULL&&root->right==NULL)
+    {
+        x+=root->data;
+        return find(root,x,sum);
+    }
+    else if(root->left==NULL&&root->right!=NULL)
+    {
+        x+=root->data;
+        return find(root,x,sum);
+    }
+    else
+    {
+        int x1=x+root->data;
+        int x2=x+root->data;
+        return find(root->left,x1,sum)||find(root->right,x2,sum);
+    }
+    
+}
