@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+//Finding the height of a tree.
+int height(struct TreeNode* root)
+{
+    if(root==NULL)
+    return 0;
+    
+    int max=0;
+    int left=height(root->left);
+    int right=height(root->right);
+    if(left>=right)
+    max=left;
+    else
+    max=right;
+    return max+1;
+}
+
+//Checking wheather tree is balanced or not.
+bool isBalanced(struct TreeNode* root)
+{
+    if(root==NULL)
+    return true;
+    
+    int l_ht=height(root->left);
+    int r_ht=height(root->right);
+    
+    int diff=l_ht-r_ht;
+    if(diff<0)
+    diff*=-1;
+    
+    if(diff<=1)
+    return isBalanced(root->left)&&isBalanced(root->right);
+    else
+    return false;
+}
+
+
