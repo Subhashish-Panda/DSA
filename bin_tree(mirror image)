@@ -1,0 +1,35 @@
+/* A Binary Tree node
+class Node
+{
+    int data;
+    Node left, right;
+   Node(int item)    
+   {
+        data = item;
+        left = right = null;
+    }
+} */
+
+class Tree
+{
+  void mirror(Node node)
+  {
+  //If the node is a leaf node of a tree.
+	if(node.left==null&&node.right==null)
+	return;
+	
+	Node temp=node.left;
+	node.left=node.right;
+	node.right=temp;
+	
+	if(node.left!=null&&node.right==null)
+	mirror(node.left);
+	else if(node.left==null&&node.right!=null)
+	mirror(node.right);
+    else if(node.left!=null&&node.right!=null)	
+	{mirror(node.left);
+	 mirror(node.right);
+	}
+	
+	}
+}
