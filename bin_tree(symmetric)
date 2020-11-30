@@ -1,0 +1,107 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public boolean isSymmetric(TreeNode root) 
+    {
+     //Corner case.
+     if(root==null)
+     return true;
+     
+     //List to store the level order traversal of original tree.
+     ArrayList<Integer> al=new ArrayList<Integer>();
+     
+     //Level-order traversal of original tree.
+     //In this level order traversal we also consider null values.
+     Queue<TreeNode> q=new LinkedList<>();
+     q.offer(root);
+     while(!q.isEmpty())
+     {
+         TreeNode obj=q.peek();
+         if(obj==null)
+         al.add(-1);
+         else if(obj.left==null&&obj.right==null)
+         {al.add(obj.val);
+          q.offer(null);
+          q.offer(null);
+         }
+         else
+         {
+         al.add(obj.val);
+         q.offer(obj.left);
+         q.offer(obj.right);
+         }
+         q.poll();
+     }
+        
+     //Converting the tree into it's mirror image.
+     mirror(root);
+      
+     //List to store the level order traversal of mirror tree.   
+     ArrayList<Integer> l=new ArrayList<Integer>();
+     
+     //Level-order traversal of it's mirror image.   
+     q.offer(root);
+     while(!q.isEmpty())
+     {
+         TreeNode obj=q.peek();
+         if(obj==null)
+         l.add(-1);
+         else if(obj.left==null&&obj.right==null)
+         {l.add(obj.val);
+          q.offer(null);
+          q.offer(null);
+         }
+         else
+         {
+         l.add(obj.val);
+         q.offer(obj.left);
+         q.offer(obj.right);
+         }
+         q.poll();
+     }
+     
+     //Final checking.
+     for(int i=0;i<l.size();i++)
+     {
+         if(l.get(i)!=al.get(i))
+         return false;
+     }
+     return true;
+    }
+    
+   //To create the mirror image of a tree.
+   void mirror(TreeNode node)
+   {
+    //If the node is a leaf node of a tree.
+	  if(node.left==null&&node.right==null)
+	  return;
+	
+	  TreeNode temp=node.left;
+	  node.left=node.right;
+	  node.right=temp;
+	
+	  if(node.left!=null&&node.right==null)
+	  mirror(node.left);
+	  else if(node.left==null&&node.right!=null)
+	  mirror(node.right);
+    else if(node.left!=null&&node.right!=null)	
+	  {mirror(node.left);
+	   mirror(node.right);
+	  }
+	 }
+        
+}
