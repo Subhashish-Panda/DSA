@@ -1,0 +1,151 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public boolean isCousins(TreeNode root, int x, int y) 
+    {
+        //To store the depth of nodes.
+        int l1=0,l2=0;
+        
+        //To store the parent of nodes.
+        TreeNode p1=null;
+        TreeNode p2=null;
+        
+        int count=0;
+        //Using the concept of level-order traversal.
+        Queue<TreeNode> q1=new LinkedList<>();
+        Queue<TreeNode> q2=new LinkedList<>();
+       
+        q1.offer(root);
+        while(!q1.isEmpty()||!q2.isEmpty())
+        {
+            //Extraction.
+            while(!q1.isEmpty())
+            {
+            TreeNode obj=q1.peek();
+            
+            //If visited node is target node.
+            if(obj.val==x)
+            l1=count;
+            if(obj.val==y)
+            l2=count;
+            
+            //Pushing children to queue2.
+            if(obj.left!=null&&obj.right==null)
+            {
+               //Recording the parent.
+               if(obj.left.val==x)
+               p1=obj;
+               if(obj.left.val==y)
+               p2=obj;
+               
+               q2.offer(obj.left);
+            }
+            else if(obj.left==null&&obj.right!=null)
+            {
+               //Recording the parent.
+               if(obj.right.val==x)
+               p1=obj;
+               if(obj.right.val==y)
+               p2=obj;
+               
+               q2.offer(obj.right);
+            }
+            else if(obj.left!=null&&obj.right!=null)
+            {
+                //Recording the parent.
+                if(obj.left.val==x||obj.right.val==x)
+                p1=obj;
+                if(obj.left.val==y||obj.right.val==y)
+                p2=obj;
+                
+                q2.offer(obj.left);
+                q2.offer(obj.right);  
+            }
+            q1.poll();
+            
+            }
+            count+=1;
+            
+            
+            //Extraction.
+            while(!q2.isEmpty())
+            {
+            TreeNode obj=q2.peek();
+            
+            //If visited node is target node.
+            if(obj.val==x)
+            l1=count;
+            if(obj.val==y)
+            l2=count;
+            
+            //Pushing children to queue2.
+            if(obj.left!=null&&obj.right==null)
+            {
+               //Recording the parent.
+               if(obj.left.val==x)
+               p1=obj;
+               if(obj.left.val==y)
+               p2=obj;
+               
+               q1.offer(obj.left);
+            }
+            else if(obj.left==null&&obj.right!=null)
+            {
+               //Recording the parent.
+               if(obj.right.val==x)
+               p1=obj;
+               if(obj.right.val==y)
+               p2=obj;
+               
+               q1.offer(obj.right);
+            }
+            else if(obj.left!=null&&obj.right!=null)
+            {
+                //Recording the parent.
+                if(obj.left.val==x||obj.right.val==x)
+                p1=obj;
+                if(obj.left.val==y||obj.right.val==y)
+                p2=obj;
+                
+                q1.offer(obj.left);
+                q1.offer(obj.right);  
+            }
+            q2.poll();
+            
+            }
+            count+=1;
+        }
+        
+        /*Verifying depth and parent of target nodes.
+        System.out.println(l1);
+        System.out.println(l2);
+        System.out.println(p1.val);
+        System.out.println(p2.val);
+        */
+        
+        if(l1==l2)
+        {
+            if(p1!=p2)
+            return true;
+            else
+            return false;
+        }
+        else
+        return false;
+        
+    }
+}
