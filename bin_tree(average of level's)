@@ -1,0 +1,105 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public List<Double> averageOfLevels(TreeNode root) 
+    {
+        //corner case.
+        if(root==null)
+        return new ArrayList<>();
+        
+        
+        //List to store the result.
+        List<Double> res=new ArrayList<>();
+        
+        //Using two queue's to perform level order traversal.
+        Queue<TreeNode> q1=new LinkedList<>();
+        Queue<TreeNode> q2=new LinkedList<>();
+        
+        //base case.
+        q1.offer(root);
+        
+        //Required variables.
+        double count=0,sum=0;
+        
+        //Algorithm.
+        while(!q1.isEmpty()||!q2.isEmpty())
+        {
+          //Reseting the required variables.
+          sum=0;
+          count=0;
+        
+          //Extraction.
+          while(!q1.isEmpty())
+          {
+          TreeNode obj=q1.peek();
+          sum+=obj.val;
+          
+          //Pushing into queue2.
+          if(obj.left!=null&&obj.right==null)
+          q2.offer(obj.left);
+          else if(obj.left==null&&obj.right!=null)
+          q2.offer(obj.right);
+          else if(obj.left!=null&&obj.right!=null)
+          {
+          q2.offer(obj.left);
+          q2.offer(obj.right);
+          }
+          count+=1;
+          q1.poll();
+          }
+          
+          
+          //Adding average of a level to the list.
+          if(count!=0)
+          {double temp=sum/count;
+           res.add(temp);
+          }
+           
+         //Reseting for next level.
+          sum=0;count=0;
+          
+          //Extraction!
+          while(!q2.isEmpty())
+          {
+          TreeNode obj=q2.peek();
+          sum+=obj.val;
+          
+          //Pushing into queue1.
+          if(obj.left!=null&&obj.right==null)
+          q1.offer(obj.left);
+          else if(obj.left==null&&obj.right!=null)
+          q1.offer(obj.right);
+          else if(obj.left!=null&&obj.right!=null)
+          {
+          q1.offer(obj.left);
+          q1.offer(obj.right);
+          }
+          count+=1;
+          q2.poll();
+          }
+            
+          //Adding average of a level to the list.  
+          if(count!=0)
+          {double temp=sum/count;
+           res.add(temp);
+          }
+         
+        }
+        return res;
+    }
+        
+}
