@@ -1,0 +1,63 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public List<Integer> preorderTraversal(TreeNode root) 
+    {
+        //Corner case.
+        if(root==null)
+        return new ArrayList<Integer>();
+     
+        //To store the result.
+        List<Integer> al=new ArrayList<>();
+        
+        //Using queue and stack for iterative solution.
+        Queue<TreeNode> q=new LinkedList<>();
+        Stack<TreeNode> stk=new Stack<TreeNode>();
+        
+        //Algorithm.
+        while(true)
+        {
+            if(root!=null)
+            {
+                //Pusing into stack and queue.
+                stk.push(root);
+                q.offer(root);
+                root=root.left;
+            }
+            else
+            {
+            //Exit condition of loop.
+            if(q.isEmpty())break;
+            
+            //Fetching value from queue.
+            TreeNode obj=q.peek();
+            al.add(obj.val);
+            
+            //Fetching value from stack.
+            obj=stk.peek();
+            root=obj.right;
+            
+            //Popping out from both stack and queue.
+            stk.pop();
+            q.poll();
+            }
+            
+        }
+        return al;
+        
+    }
+}
