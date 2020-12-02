@@ -1,0 +1,95 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public List<Integer> postorderTraversal(TreeNode root) 
+    {
+        //Corner case.
+        if(root==null)
+        return new ArrayList<Integer>();
+        
+        //To store the result.
+        List<Integer> res=new ArrayList<Integer>();
+        
+        //Application of stack and hashset.
+        HashSet<TreeNode> set=new HashSet<TreeNode>();
+        Stack<TreeNode> stk=new Stack<TreeNode>();
+        
+        //base case.
+        stk.push(root);
+        
+        //Algorithm.
+        while(!stk.empty())
+        {
+            TreeNode obj=stk.peek();
+            
+            //If fetched node has no right child.
+            if(obj.left!=null&&obj.right==null)
+            {
+                //If left child has been already visited,then visit obj.
+                if(set.contains(obj.left))
+                {
+                res.add(obj.val);
+                set.add(obj);
+                stk.pop();
+                }
+                else
+                stk.push(obj.left);
+            }
+            
+            //If fetched node has no left child.
+            else if(obj.left==null&&obj.right!=null)
+            {
+                //If right child is already visited,then visit obj.
+                if(set.contains(obj.right))
+                {
+                res.add(obj.val);
+                set.add(obj);
+                stk.pop();
+                }
+                else
+                stk.push(obj.right);
+            }
+            
+            //if fetched node has left child and right child.
+            else if(obj.left!=null&&obj.right!=null)
+            {
+                //If both left and right child of fetched node is visited.
+                if(set.contains(obj.left)&&set.contains(obj.right))
+                {
+                res.add(obj.val);
+                set.add(obj);
+                stk.pop();
+                }
+                //If left child of fetched node is visited but right child of it is not visited.
+                else if(set.contains(obj.left)&&!set.contains(obj.right))
+                stk.push(obj.right);
+                //Else, give priority to left child first.
+                else
+                stk.push(obj.left);
+            }
+            //If the fetched node has no right and left child then visit it.
+            else if(obj.left==null&&obj.right==null)
+            {
+                res.add(obj.val);
+                set.add(obj);
+                stk.pop();
+            }
+                
+        }
+        return res;
+    }
+}
