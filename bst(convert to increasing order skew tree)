@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode increasingBST(TreeNode root) 
+    {
+       //Object of class TreeNode to be used for some purpose in the Algo.
+       TreeNode obj=null;
+        
+       //ArrayList to store the inorder traversal of tree.
+       ArrayList<TreeNode> res=new ArrayList<TreeNode>();
+        
+        
+       //Finding the inorder traversal of the tree.
+       Stack<TreeNode> stk=new Stack<TreeNode>();
+       
+       //Algorithm.
+       while(true)
+       {
+         if(root!=null)
+         {
+         stk.push(root);
+         root=root.left;
+         }
+         else
+         {
+         if(stk.empty())break;
+         obj=stk.pop();
+         res.add(obj);
+         root=obj.right;
+         }
+       }
+        
+       //Setting the root.
+       root=res.get(0);
+       obj=root;
+       for(int i=1;i<res.size();i++)
+       {
+       obj.right=res.get(i);
+       obj.left=null;
+       obj=obj.right;
+       }
+       //Making changes for the last node,since it will have no child at all.
+       obj.left=null;
+       obj.right=null;
+       return root;
+       
+        
+    }
+}
