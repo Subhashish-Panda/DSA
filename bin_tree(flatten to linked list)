@@ -1,0 +1,66 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public void flatten(TreeNode root) 
+    {
+      //Corner case.
+      if(root==null)
+      return;
+        
+      TreeNode obj=null;
+        
+      //ArrayList to store the result.
+      ArrayList<TreeNode> res=new ArrayList<TreeNode>();
+        
+      //Determining the preorder traversal of tree.
+      Stack<TreeNode> stk=new Stack<TreeNode>();
+      Queue<TreeNode> q=new LinkedList<>();
+      
+      //Algorithm.
+        
+      //Step1-performing preorder traversal of tree.
+      while(true)
+      {
+          if(root!=null)
+          {
+          stk.push(root);
+          q.offer(root);
+          root=root.left;
+          }
+          else
+          {
+          if(stk.empty())break;
+          obj=q.peek();
+          res.add(obj);
+          obj=stk.peek();
+          root=obj.right;
+          stk.pop();
+          q.poll();
+          }
+      }
+      
+      
+      //Step2-setting the links.
+      obj=res.get(0);
+      for(int i=1;i<res.size();i++)
+      {
+      obj.right=res.get(i);
+      obj.left=null;
+      obj=obj.right;
+      }
+    }
+}
