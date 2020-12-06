@@ -1,0 +1,59 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution 
+{
+    public List<Integer> preorder(Node root) 
+    {
+      //Creating a list to store the result.
+      List<Integer> res=new ArrayList<>();
+      
+      //Corner case.
+      if(root==null)
+      return res;
+        
+      //Temporary list.
+      List<Node> temp=new ArrayList<>();
+      
+      //Creating a stack to perform preorder traversal.
+      Stack<Node> stk=new Stack<Node>();
+      
+      //base initialization.
+      stk.push(root);
+      
+      while(!stk.empty())
+      {
+          //Visiting the node.
+          Node obj=stk.peek();
+          res.add(obj.val);
+          stk.pop();
+          
+          //Pushing the children into stk2(in right-left manner).
+          temp=obj.children;
+          
+          if(temp.size()!=0)
+          {
+          for(int i=temp.size()-1;i>=0;i--)
+          stk.push(temp.get(i));
+          }
+       }
+          
+      return res;
+    }
+}
