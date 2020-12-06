@@ -1,0 +1,88 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+    public List<List<Integer>> levelOrder(Node root) 
+    {
+        //Creating a list to store the results.
+        List<List<Integer>> res=new ArrayList<>();
+        
+        //Corner case.
+        if(root==null)
+        return res;
+        
+        //Using two queue's to perform level order traversal.
+        Queue<Node> q1=new LinkedList<>();
+        Queue<Node> q2=new LinkedList<>();
+        
+        //base case.
+        q1.offer(root);
+        
+        //Algorithm.
+        while(!q1.isEmpty()||!q2.isEmpty())
+        {
+            ArrayList<Integer> al=new ArrayList<Integer>();
+            while(!q1.isEmpty())
+            {
+            
+            //Visiting the node.
+            Node obj=q1.peek();
+            al.add(obj.val);
+                
+            //Pushing children into the q2.
+            List<Node> temp=new ArrayList<>();
+            temp=obj.children;
+            for(int i=0;i<temp.size();i++)
+            q2.offer(temp.get(i));
+            
+            //Popping out from q1.
+            q1.poll();
+            }
+            
+            //Updating result list.
+            if(al.size()!=0)
+            res.add(al);
+            
+            al=new ArrayList<Integer>();
+            
+            while(!q2.isEmpty())
+            {
+            
+            //Visiting the node.
+            Node obj=q2.peek();
+            al.add(obj.val);
+                
+            //Pushing children into the q1.
+            List<Node> temp=new ArrayList<>();
+            temp=obj.children;
+            for(int i=0;i<temp.size();i++)
+            q1.offer(temp.get(i));
+            
+            //Popping out from q2.
+            q2.poll();
+            }
+            
+            //Updating result list.
+            if(al.size()!=0)
+            res.add(al);
+        }
+        return res;
+        
+    }
+}
