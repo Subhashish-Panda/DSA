@@ -1,0 +1,52 @@
+//Iterative implementation of pow(x,n) function.
+
+class Solution 
+{
+    public double myPow(double x, int n) 
+    {
+        //Checking for corner-values of x.
+        if(x==1)
+        return 1.0000;
+        else if(x==-1)
+        {
+        //even power.
+        if(n%2==0)
+        return 1.0000;
+        //odd power.
+        else
+        return -1.0000;
+        }
+        else if(x==0)
+        return 0.0000;
+        
+        //Checking for possible values of n.
+        if(n==Integer.MIN_VALUE)
+        return 0.0000;
+        else if(n<0)
+        {
+        n*=-1;
+        return 1/helper(x,n);
+        }
+        else
+        return helper(x,n);
+    }
+    
+    //Function to calculate power.
+    public double helper(double x,int n)
+    {
+       //Required variables.
+       double temp=x;
+       int val=n;
+       double res=1;
+       
+       while(val>=1)
+       {
+         if(val%2==1)
+         res=res*temp;
+         val=val/2;
+         temp=temp*temp;
+       }
+       return res;
+    }
+
+}
