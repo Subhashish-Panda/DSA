@@ -1,0 +1,51 @@
+//Recursive implementation of pow(x,n).
+
+class Solution 
+{
+    public double myPow(double x, int n) 
+    {
+        //Checking for corner-values of x.
+        if(x==1)
+        return 1.0000;
+        else if(x==-1)
+        {
+        //even power.
+        if(n%2==0)
+        return 1.0000;
+        //odd power.
+        else
+        return -1.0000;
+        }
+        else if(x==0)
+        return 0.0000;
+        
+        if(n==Integer.MIN_VALUE)
+        return 0.0000;
+        else if(n<1)
+        {
+        n*=-1;
+        return (double)1/cal(x,n);
+        }
+        else
+        return cal(x,n);
+        
+    }
+    public double cal(double x,int n)
+    {
+        //Base case1.
+        if(n==0)
+        return 1.0000;
+        //Base case2.
+        if(n==1)
+        return x;
+        
+        double temp=0;
+        temp=cal(x,n/2);
+        
+        if(n%2==0)
+        return temp*temp;
+        else
+        return x*temp*temp;
+        
+    }
+}
