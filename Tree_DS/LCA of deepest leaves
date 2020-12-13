@@ -1,0 +1,145 @@
+//This question is same as-> https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    //List to store the path's.
+    ArrayList<String> path=new ArrayList<String>();
+    ArrayList<String> d_path=new ArrayList<String>();
+    
+    //To store the length of longest path.
+    int max=0;
+    
+    public TreeNode subtreeWithAllDeepest(TreeNode root) 
+    {
+        int val=0;
+        
+        //Corner case(if there is only one node in the tree).
+        if(root.left==null&&root.right==null)
+        return root;
+        
+
+        //Computing the paths.
+        fetch_path(root,"");
+        
+        //Computing the deepest leaves.
+        for(int i=0;i<path.size();i++)
+        {
+            String str=path.get(i);
+            String temp[]=str.split("/");
+            if(temp.length>max)
+            max=temp.length;
+        }
+        
+        //Storing the path to deepest leaves.
+        for(int i=0;i<path.size();i++)
+        {
+            String str=path.get(i);
+            String temp[]=str.split("/");
+            if(temp.length==max)
+            d_path.add(str);
+        }
+
+
+        //Computing the LCA.
+        if(d_path.size()==1)
+        {
+        String str=d_path.get(0);
+        String temp[]=str.split("/");
+        val=Integer.parseInt(temp[temp.length-1]);
+        }
+        else
+        {
+        String temp1[]=d_path.get(0).split("/");
+        String temp2[]=d_path.get(1).split("/");
+        String temp=lcp(temp1,temp2);
+        for(int i=2;i<d_path.size();i++)
+        {
+            temp1=temp.split("/");
+            temp2=d_path.get(i).split("/");
+            temp=lcp(temp1,temp2);
+        }
+        temp1=temp.split("/");
+        val=Integer.parseInt(temp1[temp1.length-1]);
+        }
+        return search(root,val);
+    }
+    
+    //Using recursion to find out all the path in the tree.
+    public void fetch_path(TreeNode root,String str)
+    {
+        if(root.left==null&&root.right==null)
+        {
+            str+=root.val;
+            path.add(str);
+            return;
+        }
+        else if(root.left==null&&root.right!=null)
+        fetch_path(root.right,str+root.val+"/");
+        else if(root.left!=null&&root.right==null)
+        fetch_path(root.left,str+root.val+"/");
+        else if(root.left!=null&&root.right!=null)
+        {
+        fetch_path(root.left,str+root.val+"/");
+        fetch_path(root.right,str+root.val+"/");
+        }
+    }
+    
+    //Function to search the node with given value.
+    public TreeNode search(TreeNode root,int x)
+    {
+        Stack<TreeNode> stk=new Stack<TreeNode>();
+        
+        //Performing inorder traversal of tree.
+        while(true)
+        {
+            if(root!=null)
+            {
+            stk.push(root);
+            root=root.left;
+            }
+            else
+            {
+            if(stk.empty())break;
+            TreeNode obj=stk.peek();
+            
+            //If target is found.
+            if(obj.val==x)
+            return obj;
+            
+            root=obj.right;
+            stk.pop();
+            }
+        }
+        return null;
+    }
+    
+    //Function to find the LCP of all deepest paths.
+    public String lcp(String str1[],String str2[])
+    {
+        String res="";
+        for(int i=0;i<str1.length;i++)
+        {
+            if(str1[i].equals(str2[i]))
+            res+=str1[i];
+            else
+            break;
+            res+="/";
+        }
+        return res;
+    }
+}
